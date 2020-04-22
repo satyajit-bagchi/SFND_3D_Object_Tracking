@@ -155,7 +155,29 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev,
 void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
                      std::vector<LidarPoint> &lidarPointsCurr, double frameRate,
                      double &TTC) {
-  // ...
+  auto prevMinX = 100000.0;
+  auto currMinX = 100000.0;
+  constexpr float reflectivityThreshold = 0.4;
+
+  std::sort(lidarPointsPrev.begin(), lidarPointsPrev.end(),
+            [](const LidarPoint &lhs, const LidarPoint &rhs) {
+              return lhs.x < rhs.x;
+            });
+  std::sort(lidarPointsCurr.begin(), lidarPointsCurr.end(),
+            [&](const LidarPoint &lhs, const LidarPoint &rhs) {
+              return lhs.x < rhs.x;
+            });
+  int medianIxPrev = lidarPointsPrev.size() / 2;
+  int medianIxCurr = lidarPointsPrev.size() / 2;
+
+  prevMinX = lidarPointsPrev[medianIxPrev].x;
+  currMinX = lidarPointsCurr[medianIxCurr].x;
+
+  auto deltaX = prevMinX - currMinX;
+  auto dt = 1. / frameRate;
+  auto velocity = deltaX / dt;
+
+  TTC = currMinX / velocity;
 }
 
 void matchBoundingBoxes(std::vector<cv::DMatch> &matches,
