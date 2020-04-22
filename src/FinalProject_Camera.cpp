@@ -37,7 +37,7 @@ int main(int argc, const char* argv[])
   int imgStartIndex = 0;  // first file index to load (assumes Lidar and camera
                           // names have identical naming convention)
   int imgEndIndex = 18;   // last file index to load
-  int imgStepWidth = 1;
+  int imgStepWidth = 2;
   int imgFillWidth = 4;  // no. of digits which make up the file index (e.g. img-0001.png)
 
   // object detection
@@ -114,18 +114,21 @@ int main(int argc, const char* argv[])
 
   /* MAIN LOOP OVER ALL IMAGES */
 
-  std::vector<string> kpDetectors{ "FAST" };
-  std::vector<string> kpDescriptors{ "ORB", "BRIEF", "FREAK" };
+  std::vector<string> kpDetectors{ "SHITOMASI", "HARRIS", "FAST", "BRISK", "ORB", "AKAZE", "SIFT" };
+  std::vector<string> kpDescriptors{ "BRIEF", "ORB", "FREAK", "AKAZE", "SIFT" };
+  // std::vector<string> kpDetectors{ "SHITOMASI" };
+  // std::vector<string> kpDescriptors{ "SIFT" };
+  std::ofstream outputFile;
+
+  outputFile.open("results.csv");
 
   for (auto detectorType : kpDetectors)
   {
     for (auto descriptorType : kpDescriptors)
     {
+      dataBuffer.erase(dataBuffer.begin(), dataBuffer.end());
       for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex += imgStepWidth)
       {
-        std::cout << "DetectorType: " << detectorType
-                  //<< ", DescriptorType: " << descriptorType
-                  << ",Frame index: " << imgIndex << std::endl;
         /* LOAD IMAGE INTO BUFFER */
 
         // assemble filenames for current index
@@ -140,6 +143,10 @@ int main(int argc, const char* argv[])
         DataFrame frame;
         frame.cameraImg = img;
         dataBuffer.push_back(frame);
+        if (dataBuffer.size() > dataBufferSize)
+        {
+          dataBuffer.erase(dataBuffer.begin());
+        }
 
         // cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
@@ -335,7 +342,8 @@ int main(int argc, const char* argv[])
               computeTTCCamera((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, currBB->kptMatches,
                                sensorFrameRate, ttcCamera);
 
-              std::cout << "TTC Lidar: " << ttcLidar << ", TTC Camera: " << ttcCamera << std::endl << std::endl;
+              std::cout << detectorType << "+" << descriptorType << "," << imgIndex << ",";
+              std::cout << ttcLidar << "," << ttcCamera << std::endl;
               //// EOF STUDENT ASSIGNMENT
 
               bVis = false;
