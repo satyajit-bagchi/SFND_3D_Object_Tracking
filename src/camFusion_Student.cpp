@@ -240,7 +240,8 @@ void matchBoundingBoxes(std::vector<cv::DMatch>& matches, std::map<int, int>& bb
   {
     auto trainPt = currFrame.keypoints[match.trainIdx];
     auto queryPt = prevFrame.keypoints[match.queryIdx];
-    auto currBBs = prevFrame.boundingBoxes;
+
+    auto currBBs = currFrame.boundingBoxes;
     auto prevBBs = prevFrame.boundingBoxes;
     for (auto& prevbb : prevBBs)
     {
@@ -257,14 +258,15 @@ void matchBoundingBoxes(std::vector<cv::DMatch>& matches, std::map<int, int>& bb
     }
   }
   // Count potential matches
-  std::map<int, std::map<int, int>> prevBBToCurrBBcounter;
+  std::map<int, std::map<int, int>> prevBBToCurrBBcounter;  // prev -> current, count
   for (auto & [ prevbb, currbb ] : potentialBoxMatches)
   {
     ++prevBBToCurrBBcounter[prevbb][currbb];
   }
   for (auto & [ prevbb, bbCountPair ] : prevBBToCurrBBcounter)
   {
-    std::map<int, int, std::greater<int>> countToBB;
+    std::map<int, int, std::greater<int>> countToBB;  // Reverse the map, so that the counts are keys. And higher counts
+                                                      // occur first
     for (auto & [ bb, count ] : bbCountPair)
     {
       countToBB[count] = bb;
