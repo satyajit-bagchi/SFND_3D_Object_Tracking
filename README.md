@@ -216,7 +216,7 @@ We get robust estimates of TTC.
 
 Unplausible estimates could be due to considering points with low reflectivity(noise)
 
-<img src="../images/TTC_Lidar.png">
+<img src="images/TTC_Lidar.png">
 
 6. Performance Evaluation of different Detectors + Descriptors
 
@@ -254,11 +254,11 @@ The AKAZE detector + FREAK/ORB/SIFT/BRIEF is quite robust, and the TTC delta is 
 
 
 ### TTC Camera(seconds)
-<img src="../images/TTC_Camera.png" width="700" height="400">
+<img src="images/TTC_Camera.png" width="700" height="400">
 
 ### TTC Lidar(seconds)
-<img src="../images/TTC_Lidar.png">
+<img src="images/TTC_Lidar.png">
 
 ### Delta TTC Average(seconds)
-<img src="../images/Average_Delta_TTC.png">
+<img src="images/Average_Delta_TTC.png">
 
