@@ -3,10 +3,11 @@
 This is the final project from the camera module for the sensor fusion nanodegree by Udacity. This project builds on learned concepts of keypoint detectors, descriptors, and methods to match them between successive images. As well as detecting objects in an image using the YOLO deep-learning framework and associating regions in a camera image with Lidar points in 3D space 
 <img src="images/course_code_structure.png" width="779" height="414" />
 
-In this final project, you will implement the missing parts in the schematic. To do this, you will complete four major tasks: 
-1. First, you will develop a way to match 3D objects over time by using keypoint correspondences. 
-2. Computes the Time to Collision based on Lidar measurements. 
-3. TTC is calculated using the camera, which requires to first associate keypoint matches to regions of interest and then to compute the TTC based on those matches. 
+This project implements:
+
+1. An algorithm to match 3D objects over time by using keypoint correspondences. 
+2. Computes the Time to Collision (TTC) based on Lidar measurements. 
+3. Computation of TTC using the camera, which requires to first associate keypoint matches to regions of interest and then to compute the TTC based on those matches. 
 4. Performance tests to identify the most suitable detector/descriptor combination for TTC estimation and also to search for problems that can lead to faulty measurements by the camera or Lidar sensor. 
 
 ## Future work
