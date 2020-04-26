@@ -1,7 +1,7 @@
 # SFND 3D Object Tracking
 
 This is the final project from the camera module for the sensor fusion nanodegree by Udacity. This project builds on learned concepts of keypoint detectors, descriptors, and methods to match them between successive images. As well as detecting objects in an image using the YOLO deep-learning framework and associating regions in a camera image with Lidar points in 3D space 
-<img src="images/course_code_structure.png" width="779" height="414" />
+<!--<img src="images/course_code_structure.png" width="779" height="414" />-->
 
 This project implements:
 
